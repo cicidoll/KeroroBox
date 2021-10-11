@@ -1,6 +1,19 @@
 from gooey import Gooey, GooeyParser
 import subprocess
-from plugin.extract import Extract
+from plugin.extractWav import ExtractWav
+from plugin.flvToMp4 import FlvToMp4
+import utils
+from message import display_message
+argumentGroup = {
+    "ExtractWav": {
+        "parser": None,
+        "shell": None
+    },
+    "FlvToMp4": {
+        "parser": None,
+        "shell": None
+    },
+}
 
 @Gooey(
     program_name='Keroro Box',
@@ -8,12 +21,22 @@ from plugin.extract import Extract
     navigation='Tabbed'
     )
 def main():
-    settings_msg = "该工具箱提供简单的音视频操作。\n 如果好用的话，请大家给蛙吹Keroro点个关注吧！"
+    settings_msg = "test"
     parser = GooeyParser(description=settings_msg)
-    parser, shell = Extract.extractWav(parser)
+    # parser, argumentGroup.ExtractWav.shell = ExtractWav.extract(parser)
+    parser = ExtractWav.extract(parser)
+    # parser = argumentGroup.ExtractWav.parser
+    # parser, argumentGroup.FlvToMp4.shell = FlvToMp4.extract(parser)
+    parser = FlvToMp4.extract(parser)
+    # parser = argumentGroup.FlvToMp4.parser
+    args = parser.parse_args()
 
-    args=parser.parse_args()
-    runShell(shell)
+    inputName = args.Filename
+    outputName = args.outputFile
+    # shell = utils.convertShell(str(), inputName, outputName)
+    # print(args)
+    # runShell(shell)
+    display_message(args)
 
 def runShell(shell):
     subprocess.run(shell)    
