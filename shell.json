@@ -1,4 +1,0 @@
-{
-    "ExtractWav": "./bin/ffmpeg -i $input -c:v copy -strict experimental $output.wav",
-    "FlvToMp4": "./bin/ffmpeg -i $input -y -vcodec copy -acodec copy $output.mp4"
-}
